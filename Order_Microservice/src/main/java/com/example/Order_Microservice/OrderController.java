@@ -43,7 +43,7 @@ public class OrderController {
         return deletedorder;
     }
 
-    @PutMapping("/order/{id)")
+    @PutMapping("/order/{id}")
     public OrderService_Model updateOrder(@PathVariable int id, @RequestBody OrderService_Model order) {
         OrderService_Model updatedorder = orderservice.updateOrder(id, order);
 
