@@ -13,17 +13,17 @@ public class Customer {
 
     private String name;
     private String email;
-    private String addres;
+    private String address;
     private String orders;
 
     public Customer() {
     }
 
-    public Customer(int id, String name, String email, String addres, String orders) {
+    public Customer(int id, String name, String email, String address, String orders) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.addres = addres;
+        this.address = address;
         this.orders = orders;
     }
 
@@ -52,11 +52,11 @@ public class Customer {
     }
 
     public String getAddres() {
-        return addres;
+        return address;
     }
 
-    public void setAddres(String addres) {
-        this.addres = addres;
+    public void setAddres(String address) {
+        this.address = address;
     }
 
     public String getOrders() {
