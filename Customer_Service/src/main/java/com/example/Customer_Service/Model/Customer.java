@@ -14,17 +14,16 @@ public class Customer {
     private String name;
     private String email;
     private String address;
-    private String orders;
+    
 
     public Customer() {
     }
 
-    public Customer(int id, String name, String email, String address, String orders) {
+    public Customer(int id, String name, String email, String address) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.address = address;
-        this.orders = orders;
     }
 
     public int getId() {
@@ -51,19 +50,13 @@ public class Customer {
         this.email = email;
     }
 
-    public String getAddres() {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddres(String address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 
-    public String getOrders() {
-        return orders;
-    }
-
-    public void setOrders(String orders) {
-        this.orders = orders;
-    }
+    
 }

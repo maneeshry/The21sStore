@@ -32,7 +32,7 @@ public class CustomerController {
         repo.save(customer);
     }
 
-    @DeleteMapping("/customer/{id}")
+    @DeleteMapping("/customer/delete/{id}")
     public  void deleteCustomer(@PathVariable int id)
     {
         repo.deleteById(id);
@@ -44,7 +44,7 @@ public class CustomerController {
         Customer cust=repo.findById(id).get();
         cust.setName(customer.getName());
         cust.setEmail(customer.getEmail());
-        cust.setAddres(cust.getAddres());
+        cust.setAddress(cust.getAddress());
         repo.save(cust);
         return cust;
     }
