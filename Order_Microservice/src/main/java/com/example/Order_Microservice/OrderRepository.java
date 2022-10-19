@@ -4,7 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface OrderRepository extends CrudRepository<OrderService_Model,Integer> {
+public interface OrderRepository extends CrudRepository<Orders,Integer> {
 
-    List<OrderService_Model> findByCustomerId(int customerId);
+    List<Orders> findByCustomerId(int customerId);
 }

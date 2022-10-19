@@ -14,45 +14,49 @@ public class OrderController {
     @Autowired
     private OrderService orderservice;
 
+    @Autowired
+    private OrderRepository repo;
+
     @PostMapping("/newOrder")
-    public OrderService_Model placeOrder(@RequestBody OrderService_Model order) {
+    public Orders placeOrder(@RequestBody Orders order) {
         return orderservice.placeOrder(order);
     }
 
-    @GetMapping("/orders")
-    public ResponseEntity<?> getAllOrders() {
-        Iterable<OrderService_Model> order = orderservice.getOrders();
-        if (order == null) {
-            throw new EntityNotFoundException();
-        } else {
-            return ResponseEntity.ok(order);
-        }
-    }
+    // @GetMapping("/orders")
+    // public ResponseEntity<?> getAllOrders() {
+    //     Iterable<Orders> order = orderservice.getOrders();
+    //     return ResponseEntity.ok(order);
+    // }
 
+    @GetMapping("/orders")
+    public Iterable<Orders> getOrders() {
+        return repo.findAll();
+    }
+    
     @GetMapping("/order/{orderId}")
-    public Optional<OrderService_Model> getOrderById(@PathVariable int orderId) {
-        Optional<OrderService_Model> order = orderservice.getOrderById(orderId);
+    public Optional<Orders> getOrderById(@PathVariable int orderId) {
+        Optional<Orders> order = orderservice.getOrderById(orderId);
 
         return order;
     }
 
     @DeleteMapping("/order/{orderId}")
-    public OrderService_Model deleteOrder(@PathVariable int orderId) {
-        OrderService_Model deletedorder = orderservice.deleteOrderById(orderId);
+    public Orders deleteOrder(@PathVariable int orderId) {
+        Orders deletedorder = orderservice.deleteOrderById(orderId);
 
         return deletedorder;
     }
 
     @PutMapping("/order/{id}")
-    public OrderService_Model updateOrder(@PathVariable int id, @RequestBody OrderService_Model order) {
-        OrderService_Model updatedorder = orderservice.updateOrder(id, order);
+    public Orders updateOrder(@PathVariable int id, @RequestBody Orders order) {
+        Orders updatedorder = orderservice.updateOrder(id, order);
 
         return updatedorder;
     }
 
     @GetMapping("/customer/{customerId}/order")
-    public List<OrderService_Model> getOrderByCustomerId(@PathVariable int customerId) {
-        List<OrderService_Model> newOrder = orderservice.getOrderByCustomerId(customerId);
+    public List<Orders> getOrderByCustomerId(@PathVariable int customerId) {
+        List<Orders> newOrder = orderservice.getOrderByCustomerId(customerId);
 
         return newOrder;
     }

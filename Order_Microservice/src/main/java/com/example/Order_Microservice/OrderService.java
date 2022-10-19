@@ -17,15 +17,15 @@ public class OrderService {
     @Autowired
     private OrderRepository orderrepo;
 
-    public Iterable<OrderService_Model> getOrders() {
+    public Iterable<Orders> getOrders() {
         return orderrepo.findAll();
     }
-    public Optional<OrderService_Model> getOrderById(int orderId) {
+    public Optional<Orders> getOrderById(int orderId) {
         return orderrepo.findById(orderId);
     }
 
-    public OrderService_Model deleteOrderById(int orderId) {
-        Optional<OrderService_Model> order = orderrepo.findById(orderId);
+    public Orders deleteOrderById(int orderId) {
+        Optional<Orders> order = orderrepo.findById(orderId);
         if (order.isPresent()) {
             orderrepo.deleteById(orderId);
             return order.get();
@@ -34,7 +34,7 @@ public class OrderService {
         }
     }
 
-    public OrderService_Model updateOrder(int id, OrderService_Model order) {
+    public Orders updateOrder(int id, Orders order) {
         if (orderrepo.findById(id).isPresent()) {
             return orderrepo.save(order);
         } else {
@@ -42,13 +42,13 @@ public class OrderService {
         }
     }
 
-    public OrderService_Model placeOrder(OrderService_Model order) {
+    public Orders placeOrder(Orders order) {
         return orderrepo.save(order);
     }
 
-    public List<OrderService_Model> getOrderByCustomerId(int customerId) {
+    public List<Orders> getOrderByCustomerId(int customerId) {
 
-        return (List<OrderService_Model>) orderrepo.findByCustomerId(customerId);
+        return (List<Orders>) orderrepo.findByCustomerId(customerId);
     }
 }
 //get   //order/cid/orderId

@@ -8,9 +8,8 @@ import java.util.Date;
 
 
     @Entity
-    public class OrderService_Model {
+    public class Orders {
         @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
         private int orderId;
 
         private int customerId;
@@ -19,10 +18,10 @@ import java.util.Date;
         private Date deliveryDate;
         private String deliveryAddress;
 
-        public OrderService_Model() {
+        public Orders() {
         }
 
-        public OrderService_Model(int orderId, int customerId, String productName, double amount, Date deliveryDate, String deliveryAddress) {
+        public Orders(int orderId, int customerId, String productName, double amount, Date deliveryDate, String deliveryAddress) {
             this.orderId = orderId;
             this.customerId = customerId;
             this.productName = productName;
