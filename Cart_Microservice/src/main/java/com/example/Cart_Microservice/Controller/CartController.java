@@ -15,13 +15,7 @@ public class CartController {
     @Autowired
     CartRepository repo;
 
-    @GetMapping("/cart/{id}")
-    public Cart addItems(@PathVariable int id)
-    {
-        Cart cart =repo.findById(id).get();
-
-        return cart;
-    }
+    
 
     @GetMapping("/cart/items")
     public List<Cart> getAllItems()
@@ -36,13 +30,7 @@ public class CartController {
         repo.save(cart);
     }
 
-    @DeleteMapping("/cart/{id}")
-    public void deleteCartItem(@PathVariable int id)
-    {
-        Cart cart=repo.findById(id).get();
-
-        repo.delete(cart);
-    }
+    
 
     @GetMapping("/customer/{customerId}/cart")
     public List<Cart> getCustomerItems(@PathVariable int customerId)

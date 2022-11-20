@@ -24,18 +24,21 @@ public class OrderService {
         return orderrepo.findById(orderId);
     }
 
-    public Orders deleteOrderById(int orderId) {
+    public String getOrderStatus(int orderId) {
         Optional<Orders> order = orderrepo.findById(orderId);
         if (order.isPresent()) {
-            orderrepo.deleteById(orderId);
-            return order.get();
+            return order.get().getStatus();
         } else {
-            return null;
+            return "Order not found";
         }
     }
 
     public Orders updateOrder(int id, Orders order) {
+
+        
+        order.setStatus("cancelled");
         if (orderrepo.findById(id).isPresent()) {
+
             return orderrepo.save(order);
         } else {
             return null;

@@ -1,21 +1,22 @@
 package com.shoppingservice.ShoppingService.controller;
 
+import java.util.Map.*;
 import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.*;
+import org.springframework.web.bind.annotation.*;
 import com.shoppingservice.ShoppingService.model.*;
 import com.shoppingservice.ShoppingService.clients.*;
+import org.springframework.http.*;;
 
 @RestController
 public class ShoppingServiceController {
-  @Autowired
-  public CustomerProxy customerProxy;
+  
 
   @Autowired
-  public ProductServiceProxy productProxy;
+  public ProductsProxy productProxy;
 
   @Autowired
-  public OrderServiceProxy orderProxy;
+  public OrdersProxy orderProxy;
 
   @Autowired
   public CartProxy cartProxy;
@@ -25,17 +26,8 @@ public class ShoppingServiceController {
   HashMap<String,Integer> hmap = new HashMap<>();
   double value = 0;
 
-  @GetMapping("/customers/{id}")
-  public CompositeCustomer getCustomer(@PathVariable int id) {
-    CompositeCustomer customer = customerProxy.getCompositeCustomerById(id);
-    return new CompositeCustomer(customer.getId(), customer.getName(), customer.getEmail() customer.getAddress());
-  }
 
-  @GetMapping("/customers")
-  public List<CompositeCustomer> getAllCustomers() {
-    List<CompositeCustomer> customers = customerProxy.getAllCompositeCustomers();
-    return customers;
-  }
+  
 
   @GetMapping("/products")
   public List<CompositeProduct> getAllProducts() {
@@ -44,9 +36,9 @@ public class ShoppingServiceController {
   }
 
   @GetMapping("/products/{id}")
-  public Optional<CompositeProduct> getProductById(@PathVariable Long id) {
-    CompositeProduct product = productProxy.getProductById(id);
-    return product;
+  public Optional<CompositeProduct> getProductById(@PathVariable int id) {
+    return productProxy.getProductById(id);
+    
   }
 
   @GetMapping("/products/sortByPrice")
@@ -61,10 +53,7 @@ public class ShoppingServiceController {
     
   }
 
-  @PostMapping("/customer/add")
-  public void insert(@RequestBody CompositeCustomer customer) {
-    customerProxy.insert(customer);
-  }
+ 
 
   @PostMapping("/customer/{customerId}/product/{productName}/cart/add/{quantity}")
   public void addToCart(@PathVariable int customerId, @PathVariable String productName, @PathVariable int quantity) {
@@ -76,7 +65,7 @@ public class ShoppingServiceController {
     }
 
     if(list.contains(customerId)) {
-      CompositeCart temp = cartProxy.getCompositeCartById(customerId);
+      CompositeCart temp = cartProxy.getCompositeCart(customerId);
       temp.setQuantity(temp.getQuantity() + quantity);
       temp.setName(temp.getName()+" , "+productName);
       temp.setCustomerId(customerId);
@@ -88,8 +77,9 @@ public class ShoppingServiceController {
       else {
         hmap.put(productName, hmap.get(productName) + quantity);
       }
+    }
       else {
-        CompositeCart cartItem = new CompositeCart(customerId, productName, quantity);
+        CompositeCart cartItem = new CompositeCart(customerId,quantity,productName);
         cartProxy.addCompositeCart(cartItem);
         if(!hmap.containsKey(productName)) {
           hmap.put(productName, quantity);
@@ -99,26 +89,7 @@ public class ShoppingServiceController {
         }
       }
     } 
-    @PostMapping("/placeOrder/cart/{customerId}")
-    public void placeOrderOnCart(@PathVariable int customerId) {
-      CompositeCart cart = cartProxy.getCompositeCartById(customerId);
-      String productName = cart.getName();
-      for(Entry<String,Integer> entry : hmap.entrySet()) {
-        CompositeProduct product = productProxy.getByName(entry.getKey());
-        value = value + (product.getPrice() * entry.getValue());
-      }
-      Order o1 = new Order(orderId, customerId, productName, value,null,"CA");
-      productProxy.placeOrder(o1);
-      orderId++;
-      CompositeCustomer customer = customerProxy.getCompositeCustomerById(customerId);
-      String order = customer.getOrder()+o1.toString();
-      customer.setOrder(order);
-      customer.setId(customerId);
-      customerProxy.insert(customer);
-      productProxy.deleteCartItem(customerId);
-      value = 0;
-      hmap.clear();
-    }
+    
     @GetMapping("/cart/items")
     public List<CompositeCart> getAllCartItems() {
       List<CompositeCart> cart = cartProxy.getAllItems();
@@ -138,15 +109,15 @@ public class ShoppingServiceController {
       
     }
     @GetMapping("/orders/{id}")
-    public Optional<OrderMs> getOrderById(@PathVariable int id) {
+    public Optional<CompositeOrder> getOrderById(@PathVariable int id) {
       return orderProxy.getOrderById(id);
     }
     @GetMapping("/customer/{customerId}/cart")
     public List<CompositeCart> getCartByCustomerId(@PathVariable int customerId) {
-      return cartProxy.getCartByCustomerId(customerId);
+      return cartProxy.getCustomerItems(customerId);
     }
     @GetMapping("/customer/{customerId}/order")
-    public List<OrderMs> getOrderByCustomerId(@PathVariable int customerId) {
+    public List<CompositeOrder> getOrderByCustomerId(@PathVariable int customerId) {
       return orderProxy.getOrderByCustomerId(customerId);
     }
   }

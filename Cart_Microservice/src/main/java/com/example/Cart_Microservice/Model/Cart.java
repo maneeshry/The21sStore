@@ -6,7 +6,6 @@ import javax.persistence.Id;
 @Entity
 public class Cart {
     @Id
-    private int id;
     private int customerId;
     private int quantity;
     private String name;
@@ -15,20 +14,14 @@ public class Cart {
         super();
     }
 
-    public Cart(int id,int customerId, int quantity, String name) {
-        this.id = id;
+    public Cart(int customerId, int quantity, String name) {
+        
         this.customerId = customerId;
         this.quantity = quantity;
         this.name = name;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    
 
     public int getCustomerId() {
         return customerId;

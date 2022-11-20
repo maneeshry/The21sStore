@@ -22,11 +22,6 @@ public class OrderController {
         return orderservice.placeOrder(order);
     }
 
-    // @GetMapping("/orders")
-    // public ResponseEntity<?> getAllOrders() {
-    //     Iterable<Orders> order = orderservice.getOrders();
-    //     return ResponseEntity.ok(order);
-    // }
 
     @GetMapping("/orders")
     public Iterable<Orders> getOrders() {
@@ -40,14 +35,13 @@ public class OrderController {
         return order;
     }
 
-    @DeleteMapping("/order/{orderId}")
-    public Orders deleteOrder(@PathVariable int orderId) {
-        Orders deletedorder = orderservice.deleteOrderById(orderId);
-
-        return deletedorder;
+    @GetMapping("/order/{orderId}/status")
+    public String getOrderStatus(@PathVariable int orderId) {
+        String status = orderservice.getOrderStatus(orderId);
+        return status;
     }
 
-    @PutMapping("/order/{id}")
+    @PutMapping("/order/cancel/{id}")
     public Orders updateOrder(@PathVariable int id, @RequestBody Orders order) {
         Orders updatedorder = orderservice.updateOrder(id, order);
 

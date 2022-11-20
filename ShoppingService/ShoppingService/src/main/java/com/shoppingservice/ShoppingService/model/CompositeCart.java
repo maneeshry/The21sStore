@@ -1,6 +1,6 @@
 package com.shoppingservice.ShoppingService.model;
 
-public class CompositeCart extends Cart {
+public class CompositeCart{
   private int customerId;
   private int quantity;
   private String name;
@@ -31,3 +31,4 @@ public CompositeCart() {
   public void setName(String name) {
     this.name = name;
   } 
+}

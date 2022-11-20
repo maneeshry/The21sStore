@@ -17,17 +17,27 @@ import java.util.Date;
         private double amount;
         private Date deliveryDate;
         private String deliveryAddress;
+        private String status;
 
         public Orders() {
         }
 
-        public Orders(int orderId, int customerId, String productName, double amount, Date deliveryDate, String deliveryAddress) {
+        public Orders(String status,int orderId, int customerId, String productName, double amount, Date deliveryDate, String deliveryAddress) {
             this.orderId = orderId;
             this.customerId = customerId;
             this.productName = productName;
             this.amount = amount;
             this.deliveryDate = deliveryDate;
             this.deliveryAddress = deliveryAddress;
+            this.status = status;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
         }
 
         public int getOrderId() {
